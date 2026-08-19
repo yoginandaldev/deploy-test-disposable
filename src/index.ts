@@ -1,9 +1,10 @@
 import http from "http"
 
-// Attempt 3: deliberate RUNTIME crash — throws at module load, before the
-// server ever binds a port. Different failure mode than Attempt 1's
-// TypeScript compile error: this builds fine and crashes on start.
-throw new Error("Attempt 3: intentional runtime crash at startup (undefined config)")
+// Focused re-test of lib/pipeline-abort.ts::abortPipeline (commit 98632b6):
+// crash at module load so DEPLOY_GREEN_SLOT fails immediately, and confirm
+// VERIFY_DEPLOYMENT (the next PENDING ticket in this same pipeline) reaches
+// a terminal FAILED state instead of being orphaned RUNNING.
+throw new Error("Focused re-test: intentional runtime crash at startup")
 
 const port: number = Number(process.env.PORT) || 3000
 const server = http.createServer((_req, res) => {
