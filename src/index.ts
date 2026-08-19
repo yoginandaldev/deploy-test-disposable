@@ -1,5 +1,10 @@
 import http from "http"
-throw new Error("Full regression: Attempt 3 intentional runtime crash")
+
 const port: number = Number(process.env.PORT) || 3000
-const server = http.createServer((_req, res) => { res.end("unreachable") })
-server.listen(port, "0.0.0.0")
+const server = http.createServer((_req, res) => {
+  res.writeHead(200, { "Content-Type": "text/plain" })
+  res.end("deploy-test-disposable — combined regression, Attempt 1\n")
+})
+server.listen(port, "0.0.0.0", () => {
+  console.log(`listening on ${port}`)
+})
